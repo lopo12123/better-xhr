@@ -114,3 +114,7 @@ class UseAxios {
         })
     }
 }
+
+export {
+    UseAxios
+}
