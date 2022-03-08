@@ -6,20 +6,20 @@ interface ScopeTokenPair {
 }
 
 class UseAxios {
-    #ScopeTokenPair: ScopeTokenPair[] = []
+    private _ScopeTokenPair: ScopeTokenPair[] = []
 
     /**
      * @description scope name is used to distinguish different groups
      */
     delete(scope: string, url: string, config: AxiosRequestConfig<any> = {}) {
         // search the cancelToken for the scope
-        const pair = this.#ScopeTokenPair.find((item) => {
+        const pair = this._ScopeTokenPair.find((item) => {
             return item.scope === scope
         })
         // first time for this scope
         if(!pair) {
             const cancelToken = axios.CancelToken.source()
-            this.#ScopeTokenPair.push({ scope, cancelToken })
+            this._ScopeTokenPair.push({ scope, cancelToken })
             return axios.delete(url, { ...config, cancelToken: cancelToken.token })
         }
         // already exist this scope
@@ -33,13 +33,13 @@ class UseAxios {
      */
     get(scope: string, url: string, config: AxiosRequestConfig<any> = {}) {
         // search the cancelToken for the scope
-        const pair = this.#ScopeTokenPair.find((item) => {
+        const pair = this._ScopeTokenPair.find((item) => {
             return item.scope === scope
         })
         // first time for this scope
         if(!pair) {
             const cancelToken = axios.CancelToken.source()
-            this.#ScopeTokenPair.push({ scope, cancelToken })
+            this._ScopeTokenPair.push({ scope, cancelToken })
             return axios.get(url, { ...config, cancelToken: cancelToken.token })
         }
         // already exist this scope
@@ -53,13 +53,13 @@ class UseAxios {
      */
     post(scope: string, url: string, data?: any, config: AxiosRequestConfig<any> = {}) {
         // search the cancelToken for the scope
-        const pair = this.#ScopeTokenPair.find((item) => {
+        const pair = this._ScopeTokenPair.find((item) => {
             return item.scope === scope
         })
         // first time for this scope
         if(!pair) {
             const cancelToken = axios.CancelToken.source()
-            this.#ScopeTokenPair.push({ scope, cancelToken })
+            this._ScopeTokenPair.push({ scope, cancelToken })
             return axios.post(url, data, { ...config, cancelToken: cancelToken.token })
         }
         // already exist this scope
@@ -73,13 +73,13 @@ class UseAxios {
      */
     put(scope: string, url: string, data?: any, config: AxiosRequestConfig<any> = {}) {
         // search the cancelToken for the scope
-        const pair = this.#ScopeTokenPair.find((item) => {
+        const pair = this._ScopeTokenPair.find((item) => {
             return item.scope === scope
         })
         // first time for this scope
         if(!pair) {
             const cancelToken = axios.CancelToken.source()
-            this.#ScopeTokenPair.push({ scope, cancelToken })
+            this._ScopeTokenPair.push({ scope, cancelToken })
             return axios.put(url, data, { ...config, cancelToken: cancelToken.token })
         }
         // already exist this scope
@@ -92,7 +92,7 @@ class UseAxios {
      * @description return all the scope name in the store
      */
     getScopes(): string[] {
-        return this.#ScopeTokenPair.map((pair) => {
+        return this._ScopeTokenPair.map((pair) => {
             return pair.scope
         })
     }
@@ -102,14 +102,14 @@ class UseAxios {
      */
     cancelScopes(...scopes: string[]) {
         scopes.forEach((scopeName) => {
-            const pairIndex = this.#ScopeTokenPair.findIndex((pair) => {
+            const pairIndex = this._ScopeTokenPair.findIndex((pair) => {
                 return pair.scope === scopeName
             })
             if(pairIndex !== -1) {
                 // cancel all the request in this scope
-                this.#ScopeTokenPair[pairIndex].cancelToken.cancel()
+                this._ScopeTokenPair[pairIndex].cancelToken.cancel()
                 // remove this pair
-                this.#ScopeTokenPair.splice(pairIndex, 1)
+                this._ScopeTokenPair.splice(pairIndex, 1)
             }
         })
     }
