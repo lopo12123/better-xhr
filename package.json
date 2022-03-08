@@ -1,6 +1,6 @@
 {
   "name": "axios-canceller",
-  "version": "1.0.0",
+  "version": "1.0.0-doc",
   "description": "cancel single or grouped request by axios",
   "main": "dist/index.js",
   "scripts": {
