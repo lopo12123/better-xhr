@@ -1,6 +1,16 @@
 import { AxiosRequestConfig } from "axios";
 declare class UseAxios {
     private _ScopeTokenPair;
+    static isCancel: (value: any) => boolean;
+    isCancel: (value: any) => boolean;
+    static interceptors: {
+        request: import("axios").AxiosInterceptorManager<AxiosRequestConfig<any>>;
+        response: import("axios").AxiosInterceptorManager<import("axios").AxiosResponse<any, any>>;
+    };
+    interceptors: {
+        request: import("axios").AxiosInterceptorManager<AxiosRequestConfig<any>>;
+        response: import("axios").AxiosInterceptorManager<import("axios").AxiosResponse<any, any>>;
+    };
     /**
      * @description scope name is used to distinguish different groups
      */

@@ -8,7 +8,10 @@ const axios_1 = __importDefault(require("axios"));
 class UseAxios {
     constructor() {
         this._ScopeTokenPair = [];
+        this.isCancel = axios_1.default.isCancel;
+        this.interceptors = axios_1.default.interceptors;
     }
+    // endregion
     /**
      * @description scope name is used to distinguish different groups
      */
@@ -111,3 +114,6 @@ class UseAxios {
     }
 }
 exports.UseAxios = UseAxios;
+// region re-export
+UseAxios.isCancel = axios_1.default.isCancel;
+UseAxios.interceptors = axios_1.default.interceptors;
