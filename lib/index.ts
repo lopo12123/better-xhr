@@ -8,6 +8,13 @@ interface ScopeTokenPair {
 class UseAxios {
     private _ScopeTokenPair: ScopeTokenPair[] = []
 
+    // region re-export
+    static isCancel: (value: any) => boolean = axios.isCancel
+    isCancel: (value: any) => boolean = axios.isCancel
+    static interceptors = axios.interceptors
+    interceptors = axios.interceptors
+    // endregion
+
     /**
      * @description scope name is used to distinguish different groups
      */
