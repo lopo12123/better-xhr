@@ -70,7 +70,7 @@ class UseAxios {
      * @param name 标识
      * @param interceptor 拦截器
      */
-    set_response_interceptor(name: string, interceptor: ResponseInterceptor) {
+    add_response_interceptor(name: string, interceptor: ResponseInterceptor) {
         this.#response_interceptors.set(name, interceptor)
     }
 
