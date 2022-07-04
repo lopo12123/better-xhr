@@ -155,7 +155,7 @@ class UseAxios {
      * @description `GET`
      * @param scope `scope` 名
      * @param url 请求地址
-     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
     get(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
@@ -209,7 +209,7 @@ class UseAxios {
      * @param scope `scope` 名
      * @param url 请求地址
      * @param data 请求体
-     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
     post(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
@@ -266,7 +266,7 @@ class UseAxios {
      * @description `DELETE`
      * @param scope `scope` 名
      * @param url 请求地址
-     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
     delete(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
@@ -320,7 +320,7 @@ class UseAxios {
      * @param scope `scope` 名
      * @param url 请求地址
      * @param data 请求体
-     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
     put(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
