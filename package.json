@@ -1,29 +1,29 @@
 {
-  "name": "axios-canceller",
-  "version": "1.0.1",
-  "description": "cancel single or grouped request by axios",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lopo12123/axios-canceller.git"
-  },
-  "keywords": [
-    "axios",
-    "canceller",
-    "cancel",
-    "vue",
-    "react"
-  ],
-  "author": "lopo",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lopo12123/axios-canceller/issues"
-  },
-  "homepage": "https://github.com/lopo12123/axios-canceller#readme",
-  "dependencies": {
-    "axios": "^0.26.0"
-  }
+    "name": "axios-canceller",
+    "version": "1.0.1-end",
+    "description": "cancel single or grouped request by axios",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lopo12123/axios-canceller.git"
+    },
+    "keywords": [
+        "axios",
+        "canceller",
+        "cancel",
+        "vue",
+        "react"
+    ],
+    "author": "lopo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lopo12123/axios-canceller/issues"
+    },
+    "homepage": "https://github.com/lopo12123/axios-canceller#readme",
+    "dependencies": {
+        "axios": "^0.26.0"
+    }
 }
