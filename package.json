@@ -1,29 +1,38 @@
 {
-    "name": "axios-canceller",
-    "version": "1.0.1-end",
-    "description": "cancel single or grouped request by axios",
+    "name": "better-xhr",
+    "version": "1.0.0",
+    "description": "an adaptor for fetch/xhr/axios",
     "main": "dist/index.js",
     "scripts": {
-        "build": "tsc"
+        "build": "rollup --config rollup.config.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/lopo12123/axios-canceller.git"
+        "url": "git+https://github.com/lopo12123/better-xhr.git"
     },
     "keywords": [
-        "axios",
-        "canceller",
-        "cancel",
-        "vue",
-        "react"
+        "fetch",
+        "xhr",
+        "axios"
     ],
     "author": "lopo",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/lopo12123/axios-canceller/issues"
+        "url": "https://github.com/lopo12123/better-xhr/issues"
     },
-    "homepage": "https://github.com/lopo12123/axios-canceller#readme",
-    "dependencies": {
-        "axios": "^0.26.0"
+    "homepage": "https://github.com/lopo12123/better-xhr#readme",
+    "files": [
+        "dist",
+        "lib"
+    ],
+    "devDependencies": {
+        "@rollup/plugin-typescript": "^8.3.3",
+        "rollup": "^2.75.7",
+        "rollup-plugin-terser": "^7.0.2",
+        "tslib": "^2.4.0",
+        "typescript": "^4.7.4"
+    },
+    "peerDependencies": {
+        "axios": "^0.27.2"
     }
 }
