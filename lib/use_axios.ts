@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { do_retry_task } from "./core";
 
-type RequestInterceptor = {
+export type RequestInterceptor = {
     fn: (config: Omit<AxiosRequestConfig, 'signal'>) => void
 }
-type ResponseInterceptor = {
+export type ResponseInterceptor = {
     fulfill: (res: any) => void
     reject: (err: any) => void
 }
@@ -136,7 +136,9 @@ class UseAxios {
     /**
      * @description 是否主动取消请求
      */
-    public isCancel: (err: any) => boolean = axios.isCancel
+    public isCancel = (err: any) => {
+        return axios.isCancel(err) || err instanceof DOMException && err.name === 'AbortError'
+    }
 
     /**
      * @description 若存在该 scope 则直接返回, 否则插入并返回新值
