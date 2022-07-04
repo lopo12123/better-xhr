@@ -1,8 +1,8 @@
-import axios, { AxiosRequestConfig, CancelTokenSource } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { do_retry_task } from "./core";
 
 type RequestInterceptor = {
-    fn: (config: Omit<AxiosRequestConfig, 'cancelToken'>) => void
+    fn: (config: Omit<AxiosRequestConfig, 'signal'>) => void
 }
 type ResponseInterceptor = {
     fulfill: (res: any) => void
@@ -13,9 +13,9 @@ class UseAxios {
     /**
      * @description 全局配置
      */
-    readonly #global_config: Omit<AxiosRequestConfig, 'cancelToken'>
+    readonly #global_config: Omit<AxiosRequestConfig, 'signal'>
 
-    constructor(global_config: Omit<AxiosRequestConfig, 'cancelToken'> = {}) {
+    constructor(global_config: Omit<AxiosRequestConfig, 'signal'> = {}) {
         this.#global_config = global_config
     }
 
@@ -92,7 +92,7 @@ class UseAxios {
     /**
      * @description 取消请求的 token 索引
      */
-    readonly #scopes = new Map<string, CancelTokenSource>()
+    readonly #scopes = new Map<string, AbortController>()
     /**
      * @description 获取当前实例中的所有 scope
      */
@@ -104,7 +104,7 @@ class UseAxios {
      * @description 取消某个 scope 的请求
      */
     cancel_scope(scope: string, message: string = '') {
-        this.#scopes.get(scope)?.cancel(message)
+        this.#scopes.get(scope)?.abort(message)
         this.#scopes.delete(scope)
     }
 
@@ -122,7 +122,7 @@ class UseAxios {
      */
     cancel_all() {
         this.#scopes.forEach(canceller => {
-            canceller.cancel()
+            canceller.abort()
         })
         this.#scopes.clear()
     }
@@ -130,7 +130,9 @@ class UseAxios {
     /**
      * @description 是否主动取消请求
      */
-    static isCancel: (err: any) => boolean = axios.isCancel
+    static isCancel = (err: any) => {
+        return axios.isCancel(err) || err instanceof DOMException && err.name === 'AbortError'
+    }
     /**
      * @description 是否主动取消请求
      */
@@ -141,7 +143,7 @@ class UseAxios {
      */
     private entry_or_insert(scope: any) {
         // 若无此 scope 对应的 token, 则生成
-        if(!this.#scopes.has(scope)) this.#scopes.set(scope, axios.CancelToken.source())
+        if(!this.#scopes.has(scope)) this.#scopes.set(scope, new AbortController())
 
         // 此时确保有 scope 对应的 token, 获取
         return this.#scopes.get(scope)!
@@ -151,9 +153,9 @@ class UseAxios {
      * @description `GET`
      * @param scope `scope` 名
      * @param url 请求地址
-     * @param config 请求参数 (同 axios, 但不允许配置 'cancelToken' 字段)
+     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
      */
-    get(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    get(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
         const token_for_scope = this.entry_or_insert(scope)
 
@@ -166,7 +168,7 @@ class UseAxios {
 
         // 返回与此 token 绑定的请求实例
         return new Promise((resolve, reject) => {
-            axios.get(url, { ...(config ?? this.#global_config), cancelToken: token_for_scope.token })
+            axios.get(url, { ...(config ?? this.#global_config), signal: token_for_scope.signal })
                 .then(res => {
                     // 应用响应拦截器 - 成功
                     this.#response_interceptors.forEach(interceptor => {
@@ -189,9 +191,9 @@ class UseAxios {
      * @param scope `scope` 名
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
      * @param url 请求地址
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `cancelToken` 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
-    get_retry(scope: string, retry: number = 1, url: string, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    get_retry(scope: string, retry: number = 1, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
         return do_retry_task(
             retry,
             this.get,
@@ -205,9 +207,9 @@ class UseAxios {
      * @param scope `scope` 名
      * @param url 请求地址
      * @param data 请求体
-     * @param config 请求参数 (同 axios, 但不允许配置 'cancelToken' 字段)
+     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
      */
-    post(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    post(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
         const token_for_scope = this.entry_or_insert(scope)
 
@@ -222,7 +224,7 @@ class UseAxios {
         return new Promise((resolve, reject) => {
             axios.post(url, data, {
                     ...(config ?? this.#global_config),
-                    cancelToken: token_for_scope.token
+                    signal: token_for_scope.signal
                 })
                 .then(res => {
                     // 应用响应拦截器 - 成功
@@ -247,9 +249,9 @@ class UseAxios {
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
      * @param url 请求地址
      * @param data 请求体
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `cancelToken` 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
-    post_retry(scope: string, retry: number, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    post_retry(scope: string, retry: number, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
         return do_retry_task(
             retry,
             this.post,
@@ -262,9 +264,9 @@ class UseAxios {
      * @description `DELETE`
      * @param scope `scope` 名
      * @param url 请求地址
-     * @param config 请求参数 (同 axios, 但不允许配置 'cancelToken' 字段)
+     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
      */
-    delete(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    delete(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
         const token_for_scope = this.entry_or_insert(scope)
 
@@ -277,7 +279,7 @@ class UseAxios {
 
         // 返回与此 token 绑定的请求实例
         return new Promise((resolve, reject) => {
-            axios.delete(url, { ...(config ?? this.#global_config), cancelToken: token_for_scope.token })
+            axios.delete(url, { ...(config ?? this.#global_config), signal: token_for_scope.signal })
                 .then(res => {
                     // 应用响应拦截器 - 成功
                     this.#response_interceptors.forEach(interceptor => {
@@ -300,9 +302,9 @@ class UseAxios {
      * @param scope `scope` 名
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
      * @param url 请求地址
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `cancelToken` 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
-    delete_retry(scope: string, retry: number, url: string, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    delete_retry(scope: string, retry: number, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
         return do_retry_task(
             retry,
             this.delete,
@@ -316,9 +318,9 @@ class UseAxios {
      * @param scope `scope` 名
      * @param url 请求地址
      * @param data 请求体
-     * @param config 请求参数 (同 axios, 但不允许配置 'cancelToken' 字段)
+     * @param config 请求参数 (同 axios, 但不允许配置 'signal' 字段)
      */
-    put(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    put(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
         // 获取 token
         const token_for_scope = this.entry_or_insert(scope)
 
@@ -331,7 +333,7 @@ class UseAxios {
 
         // 返回与此 token 绑定的请求实例
         return new Promise((resolve, reject) => {
-            axios.put(url, data, { ...(config ?? this.#global_config), cancelToken: token_for_scope.token })
+            axios.put(url, data, { ...(config ?? this.#global_config), signal: token_for_scope.signal })
                 .then(res => {
                     // 应用响应拦截器 - 成功
                     this.#response_interceptors.forEach(interceptor => {
@@ -355,9 +357,9 @@ class UseAxios {
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
      * @param url 请求地址
      * @param data 请求体
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `cancelToken` 字段)
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
-    put_retry(scope: string, retry: number, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'cancelToken'>) {
+    put_retry(scope: string, retry: number, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
         return do_retry_task(
             retry,
             this.put,
