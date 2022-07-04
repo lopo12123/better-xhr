@@ -8,12 +8,19 @@ export default defineConfig({
         'lib/use_axios.ts',
         'lib/index.ts'
     ],
-    output:
+    output: [
         {
-            dir: 'dist',
+            dir: 'dist/esm',
             format: 'esm',
             sourcemap: 'inline',
             plugins: [terser()]
         },
-    plugins: [typescript({tsconfig: './tsconfig.json'})],
+        // {
+        //     dir: 'dist/cjs',
+        //     format: 'cjs',
+        //     sourcemap: 'inline',
+        //     plugins: [terser()]
+        // },
+    ],
+    plugins: [typescript({tsconfig: './tsconfig.esm.json'})]
 })
