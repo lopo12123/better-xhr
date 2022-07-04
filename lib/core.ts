@@ -31,22 +31,3 @@ const do_retry_task = <Params extends Array<any> = any[], Response = any>(
 export {
     do_retry_task
 }
-
-do_retry_task(3,
-    () => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.log('error')
-                reject('finish')
-            }, 1000)
-        })
-    },
-    [],
-    (err) => false
-)
-    .then(res => {
-        console.log(res)
-    })
-    .catch(err => {
-        console.log(err)
-    })
