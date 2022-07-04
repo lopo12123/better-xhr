@@ -143,7 +143,7 @@ class UseAxios {
     /**
      * @description 若存在该 scope 则直接返回, 否则插入并返回新值
      */
-    private entry_or_insert(scope: any) {
+    private entry_or_insert(scope: string) {
         // 若无此 scope 对应的 token, 则生成
         if(!this.#scopes.has(scope)) this.#scopes.set(scope, new AbortController())
 
