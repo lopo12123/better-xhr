@@ -1,6 +1,5 @@
 {
     "name": "better-xhr",
-    "private": true,
     "version": "1.0.0",
     "description": "an adaptor for fetch/xhr/axios",
     "main": "dist/index.js",
