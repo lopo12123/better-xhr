@@ -37,7 +37,7 @@ declare class UseAxios {
      * @param name 标识
      * @param interceptor 拦截器
      */
-    set_response_interceptor(name: string, interceptor: ResponseInterceptor): void;
+    add_response_interceptor(name: string, interceptor: ResponseInterceptor): void;
     /**
      * @description 移除响应拦截器
      * @param name 拦截器名称
