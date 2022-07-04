@@ -1,10 +1,17 @@
 {
     "name": "better-xhr",
+    "private": true,
     "version": "1.0.0",
     "description": "an adaptor for fetch/xhr/axios",
     "main": "dist/index.js",
     "scripts": {
         "build": "rollup --config rollup.config.js"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
     },
     "repository": {
         "type": "git",
