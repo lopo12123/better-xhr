@@ -195,7 +195,7 @@ class UseAxios {
      * @param url 请求地址
      * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
      */
-    get_retry(scope: string, retry: number = 1, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
+    get_retry(scope: string, retry: number, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
         return do_retry_task(
             retry,
             this.get,
