@@ -245,3 +245,9 @@ useAxios.remove_response_interceptor('interceptor2')
 > fetch
 
 > xhr
+
+> CHANGELOG
+
+| version | description |
+| --- | --- |
+| `1.0.0` | Complete the encapsulation of `axios`. Support `GET`, `POST`, `DELETE`,`PUT` with `scope`, `retry`, `interceptor`. |
