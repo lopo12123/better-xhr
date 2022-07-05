@@ -1,14 +1,13 @@
-import { AxiosRequestConfig } from "axios";
 export declare type RequestInterceptor = {
-    fn: (config: Omit<AxiosRequestConfig, 'signal'>) => void;
+    fn: (config: Omit<RequestInit, 'signal' | 'method'>) => void;
 };
 export declare type ResponseInterceptor = {
-    fulfill: (res: any) => void;
+    fulfill: (res: Response) => void;
     reject: (err: any) => void;
 };
-declare class UseAxios {
+declare class UseFetch {
     #private;
-    constructor(global_config?: Omit<AxiosRequestConfig, 'signal'>);
+    constructor(global_config?: Omit<RequestInit, 'signal' | 'method'>);
     /**
      * @description 获取当前实例中的所有请求拦截器名称
      */
@@ -76,68 +75,68 @@ declare class UseAxios {
      */
     private entry_or_insert;
     /**
+     * @description fetch 的所有类型请求的语法结构相同, 其请求体(如果有)在 `config` 中.
+     */
+    private common_fetch;
+    /**
      * @description `GET`
      * @param scope `scope` 名
-     * @param url 请求地址
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    get(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    get(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
     /**
      * @description `GET`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
      * @param scope `scope` 名
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
-     * @param url 请求地址
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    get_retry(scope: string, retry: number, url: string, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    get_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
     /**
      * @description `POST`
      * @param scope `scope` 名
-     * @param url 请求地址
-     * @param data 请求体
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    post(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    post(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
     /**
      * @description `POST`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
      * @param scope `scope` 名
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
-     * @param url 请求地址
-     * @param data 请求体
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    post_retry(scope: string, retry: number, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    post_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
     /**
      * @description `DELETE`
      * @param scope `scope` 名
-     * @param url 请求地址
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    delete(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    delete(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
     /**
      * @description `DELETE`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
      * @param scope `scope` 名
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
-     * @param url 请求地址
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    delete_retry(scope: string, retry: number, url: string, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    delete_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
     /**
      * @description `PUT`
      * @param scope `scope` 名
-     * @param url 请求地址
-     * @param data 请求体
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    put(scope: string, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    put(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
     /**
      * @description `PUT`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
      * @param scope `scope` 名
      * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
-     * @param url 请求地址
-     * @param data 请求体
-     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
-    put_retry(scope: string, retry: number, url: string, data?: any, config?: Omit<AxiosRequestConfig, 'signal'>): Promise<unknown>;
+    put_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
 }
-export { UseAxios };
+export { UseFetch };
