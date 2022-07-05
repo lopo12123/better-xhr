@@ -1,15 +1,23 @@
-### better-xhr
+## better-xhr
 
 Use scoped requests (via xhr/fetch/axios) to quickly cancel specific requests when needed
 
-⚠ require `node >= v15` to support `AbortController` (in node)
+### requirement
+
+- `UseAxios`
+    - `axios` as peerDependency
+    - `node >= v15.0.0` to support `AbortController`
+- `UseFetch`
+    - `node >= v17.5.0` to support `fetch api`
 
 ---
 
-> axios
+### axios
 
-- ⚠ require `axios` as peerDependency
-- `GET`
+- `axios` as peerDependency
+- `node >= v15.0.0` to support `AbortController`
+
+> `GET`
 
 ```ts
 import { UseAxios } from "better-xhr";
@@ -19,8 +27,8 @@ const useAxios = new UseAxios();
 // single request
 useAxios
     .get(
-        'scope-for-get',
-        'get-url',
+        'scope-name',
+        'target-url',
         {}  // optional config for axios
     )
     .then(res => {
@@ -33,8 +41,8 @@ useAxios
 // auto retry
 useAxios
     .get_retry(
-        'scope-for-get', 5,
-        'get-url',
+        'scope-name', 5,
+        'target-url',
         {}  // optional config for axios
     )
     .then(res => {
@@ -45,7 +53,7 @@ useAxios
     })
 ```
 
-- `POST`
+> `POST`
 
 ```ts
 import { UseAxios } from "better-xhr";
@@ -55,8 +63,8 @@ const useAxios = new UseAxios();
 // single request
 useAxios
     .post(
-        'scope-for-post',
-        'post-url',
+        'scope-name',
+        'target-url',
         null,  // post data in any type
         {}  // optional config for axios
     )
@@ -70,8 +78,8 @@ useAxios
 // auto retry
 useAxios
     .post(
-        'scope-for-post', 5,
-        'post-url',
+        'scope-name', 5,
+        'target-url',
         null,  // post data in any type
         {}  // optional config for axios
     )
@@ -83,7 +91,7 @@ useAxios
     })
 ```
 
-- `DELETE`
+> `DELETE`
 
 ```ts
 import { UseAxios } from "better-xhr";
@@ -93,8 +101,8 @@ const useAxios = new UseAxios();
 // single request
 useAxios
     .delete(
-        'scope-for-delete',
-        'delete-url',
+        'scope-name',
+        'target-url',
         {}  // optional config for axios
     )
     .then(res => {
@@ -107,8 +115,8 @@ useAxios
 // auto retry
 useAxios
     .delete_retry(
-        'scope-for-delete', 5,
-        'delete-url',
+        'scope-name', 5,
+        'target-url',
         {}  // optional config for axios
     )
     .then(res => {
@@ -119,7 +127,7 @@ useAxios
     })
 ```
 
-- `PUT`
+> `PUT`
 
 ```ts
 import { UseAxios } from "better-xhr";
@@ -129,8 +137,8 @@ const useAxios = new UseAxios();
 // single request
 useAxios
     .put(
-        'scope-for-put',
-        'put-url',
+        'scope-name',
+        'target-url',
         null,  // put data in any type
         {}  // optional config for axios
     )
@@ -144,8 +152,8 @@ useAxios
 // auto retry
 useAxios
     .put_retry(
-        'scope-for-put', 5,
-        'put-url',
+        'scope-name', 5,
+        'target-url',
         null,  // put data in any type
         {}  // optional config for axios
     )
@@ -157,7 +165,7 @@ useAxios
     })
 ```
 
-- `Scope` & `Cancel`
+> `Scope` & `Cancel`
 
 ```ts
 import { UseAxios } from "better-xhr";
@@ -195,7 +203,7 @@ useAxios.cancel_scopes([ 'scope1', 'scope2', 'scope3' ])
 useAxios.cancel_all()
 ```
 
-- `Interceptor`
+> `Interceptor`
 
 ```ts
 import { UseAxios } from "better-xhr";
@@ -242,11 +250,257 @@ console.log(useAxios.response_interceptors)  // [ 'interceptor2' ]
 useAxios.remove_response_interceptor('interceptor2')
 ```
 
-> fetch
+---
 
-> xhr
+### fetch
 
-> CHANGELOG
+- `node >= v17.5.0` to support `fetch api`
+
+> `GET`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .get(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .get_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `POST`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .post(
+        'scope-name',
+        'target-url',
+        {
+            body: null  // post data in any type
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .post_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            body: null  // post data in any type
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `DELETE`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .delete(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .delete_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `PUT`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .put(
+        'scope-name',
+        'target-url',
+        {
+            body: null  // put data in any type
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .put_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            body: null  // put data in any type
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `Scope` & `Cancel`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// setup a request with scope
+useFetch
+    .get(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// get all scopes in the instance
+const scopes = useFetch.scopes
+console.log(scopes)  // [ 'scope-name' ]
+
+// cancel specific scope
+useFetch.cancel_scope('scope-name')
+
+// cancel scopes
+useFetch.cancel_scopes([ 'scope1', 'scope2', 'scope3' ])
+
+// cancel all request
+useFetch.cancel_all()
+```
+
+> `Interceptor`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// request interceptor
+
+// - add 
+useFetch
+    .add_request_interceptor(
+        'interceptor1',
+        (config) => {
+            /** operate config here */
+        }
+    )
+
+// - list
+console.log(useFetch.request_interceptors)  // [ 'interceptor1' ]
+
+// - remove
+useFetch.remove_request_interceptor('interceptor1')
+
+// response interceptor
+
+// - add
+useFetch
+    .add_response_interceptor(
+        'interceptor2',
+        {
+            fulfill: (res) => {
+                /** operate response */
+            },
+            reject: (err) => {
+                /** operate error */
+            }
+        }
+    )
+
+// - list
+console.log(useFetch.response_interceptors)  // [ 'interceptor2' ]
+
+// - remove
+useFetch.remove_response_interceptor('interceptor2')
+```
+
+---
+
+### xhr
+
+---
+
+### CHANGELOG
 
 | version | description |
 | --- | --- |
