@@ -6,6 +6,7 @@ export default defineConfig({
     input: [
         'lib/core.ts',
         'lib/use_axios.ts',
+        'lib/use_fetch.ts',
         'lib/index.ts'
     ],
     output: [
