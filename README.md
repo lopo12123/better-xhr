@@ -12,6 +12,54 @@ Use scoped requests (via xhr/fetch/axios) to quickly cancel specific requests wh
 
 ---
 
+### retry
+
+This is a general generic function used by other classes. When the promise fails, it will automatically repeat several
+times and then throw the error. Expose here to enable retrying of custom behavior.
+
+- declaration
+
+```ts
+declare const do_retry_task: <Params extends Array<any> = any[], Response = any>
+(max: number,
+ task: (...args: Params) => Promise<Response>,
+ args: Params,
+ immediate_condition?: ((err: any) => boolean) | undefined)
+    => Promise<Response>;
+```
+
+- example
+
+```ts
+import { do_retry_task } from "better-xhr";
+
+let count = 0
+const countup_in_1s = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            count += 1
+            console.log('now count is: ', count)
+            reject('for auto retry')
+        }, 1_000)
+    })
+}
+
+do_retry_task(5, countup_in_1s, [])
+    .then(res => {
+        console.log('res: ', res)
+    })
+    .catch(err => {
+        console.log('err: ', err)
+    })
+// now count is:  1 - origin request
+// now count is:  2 - retry 1
+// now count is:  3 - retry 2
+// now count is:  4 - retry 3
+// now count is:  5 - retry 4
+// now count is:  6 - retry 5
+// err: for auto retry - promise after auto-retry
+```
+
 ### axios
 
 - `axios` as peerDependency
