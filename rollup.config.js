@@ -7,6 +7,7 @@ export default defineConfig({
         'lib/core.ts',
         'lib/use_axios.ts',
         'lib/use_fetch.ts',
+        'lib/use_xhr.ts',
         'lib/index.ts'
     ],
     output: [
