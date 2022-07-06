@@ -1,6 +1,7 @@
 ## better-xhr
 
-Use scoped requests (via xhr/fetch/axios) to quickly cancel specific requests when needed
+The encapsulation of `fetch`/`XMLHttpRequest`/`axios` makes it possible to use scopes to identify requests, and to
+cancel requests under a certain (several) scopes. Request/Response interceptors are also supported.
 
 ### requirement
 

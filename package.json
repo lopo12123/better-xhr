@@ -1,7 +1,7 @@
 {
     "name": "better-xhr",
     "version": "1.0.0",
-    "description": "an adaptor for fetch/xhr/axios",
+    "description": "The encapsulation of `fetch`/`XMLHttpRequest`/`axios` makes it possible to use scopes to identify requests, and to cancel requests under a certain (several) scopes.",
     "main": "dist/index.js",
     "scripts": {
         "build": "rollup --config rollup.config.js"
