@@ -369,6 +369,167 @@ class UseAxios {
             this.isCancel
         )
     }
+
+    /**
+     * @description `HEAD`
+     * @param scope `scope` 名
+     * @param url 请求地址
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     */
+    head(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
+        // 获取 token
+        const token_for_scope = this.entry_or_insert(scope)
+
+        // 应用请求拦截器
+        if(!!config) {
+            this.#request_interceptors.forEach((interceptor) => {
+                interceptor.fn(config)
+            })
+        }
+
+        // 返回与此 token 绑定的请求实例
+        return new Promise((resolve, reject) => {
+            axios.head(url, { ...(config ?? this.#global_config), signal: token_for_scope.signal })
+                .then(res => {
+                    // 应用响应拦截器 - 成功
+                    this.#response_interceptors.forEach(interceptor => {
+                        interceptor.fulfill(res)
+                    })
+                    resolve(res)
+                })
+                .catch(err => {
+                    // 应用响应拦截器 - 失败
+                    this.#response_interceptors.forEach(interceptor => {
+                        interceptor.reject(err)
+                    })
+                    reject(err)
+                })
+        })
+    }
+
+    /**
+     * @description `HEAD`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求地址
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     */
+    head_retry(scope: string, retry: number, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
+        return do_retry_task(
+            retry,
+            this.head,
+            [ scope, url, config ],
+            this.isCancel
+        )
+    }
+
+    /**
+     * @description `OPTIONS`
+     * @param scope `scope` 名
+     * @param url 请求地址
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     */
+    options(scope: string, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
+        // 获取 token
+        const token_for_scope = this.entry_or_insert(scope)
+
+        // 应用请求拦截器
+        if(!!config) {
+            this.#request_interceptors.forEach((interceptor) => {
+                interceptor.fn(config)
+            })
+        }
+
+        // 返回与此 token 绑定的请求实例
+        return new Promise((resolve, reject) => {
+            axios.options(url, { ...(config ?? this.#global_config), signal: token_for_scope.signal })
+                .then(res => {
+                    // 应用响应拦截器 - 成功
+                    this.#response_interceptors.forEach(interceptor => {
+                        interceptor.fulfill(res)
+                    })
+                    resolve(res)
+                })
+                .catch(err => {
+                    // 应用响应拦截器 - 失败
+                    this.#response_interceptors.forEach(interceptor => {
+                        interceptor.reject(err)
+                    })
+                    reject(err)
+                })
+        })
+    }
+
+    /**
+     * @description `OPTIONS`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求地址
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     */
+    options_retry(scope: string, retry: number, url: string, config?: Omit<AxiosRequestConfig, 'signal'>) {
+        return do_retry_task(
+            retry,
+            this.options,
+            [ scope, url, config ],
+            this.isCancel
+        )
+    }
+
+    /**
+     * @description `PATCH`
+     * @param scope `scope` 名
+     * @param url 请求地址
+     * @param data 请求体
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     */
+    patch(scope: string, url: string, data: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
+        // 获取 token
+        const token_for_scope = this.entry_or_insert(scope)
+
+        // 应用请求拦截器
+        if(!!config) {
+            this.#request_interceptors.forEach((interceptor) => {
+                interceptor.fn(config)
+            })
+        }
+
+        // 返回与此 token 绑定的请求实例
+        return new Promise((resolve, reject) => {
+            axios.patch(url, data, { ...(config ?? this.#global_config), signal: token_for_scope.signal })
+                .then(res => {
+                    // 应用响应拦截器 - 成功
+                    this.#response_interceptors.forEach(interceptor => {
+                        interceptor.fulfill(res)
+                    })
+                    resolve(res)
+                })
+                .catch(err => {
+                    // 应用响应拦截器 - 失败
+                    this.#response_interceptors.forEach(interceptor => {
+                        interceptor.reject(err)
+                    })
+                    reject(err)
+                })
+        })
+    }
+
+    /**
+     * @description `PATCH`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求地址
+     * @param data 请求体
+     * @param config 请求参数 (同 `axios`, 但不允许配置 `signal` 字段)
+     */
+    patch_retry(scope: string, retry: number, url: string, data: any, config?: Omit<AxiosRequestConfig, 'signal'>) {
+        return do_retry_task(
+            retry,
+            this.patch,
+            [ scope, url, data, config ],
+            this.isCancel
+        )
+    }
 }
 
 export {
