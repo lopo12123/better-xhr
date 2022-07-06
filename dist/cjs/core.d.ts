@@ -1,4 +1,8 @@
 /**
+ * @description type of request
+ */
+export declare type RequestType = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'HEAD' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
+/**
  * @description 运行 `task`, 失败自动重试最多 `max` 次
  * @param max 最大重试次数: 若`<1`则使用默认值`1`
  * @param task 任务: 返回类型为 Promise 的函数

@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("./use_axios.js"),s=require("./use_fetch.js"),r=require("./core.js");require("axios"),exports.UseAxios=e.UseAxios,exports.UseFetch=s.UseFetch,exports.do_retry_task=r.do_retry_task;
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("./use_axios.js"),r=require("./use_fetch.js"),s=require("./use_xhr.js"),t=require("./core.js");require("axios"),exports.UseAxios=e.UseAxios,exports.UseFetch=r.UseFetch,exports.UseXhr=s.UseXhr,exports.do_retry_task=t.do_retry_task;
 //# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIn0=

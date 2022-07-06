@@ -138,5 +138,80 @@ declare class UseFetch {
      * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
      */
     put_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `HEAD`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    head(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `HEAD`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    head_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `CONNECT`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    connect(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `CONNECT`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    connect_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `OPTIONS`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    options(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `OPTIONS`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    options_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `TRACE`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    trace(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `TRACE`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    trace_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `PATCH`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    patch(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
+    /**
+     * @description `PATCH`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    patch_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>): Promise<Response>;
 }
 export { UseFetch };
