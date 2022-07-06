@@ -213,6 +213,116 @@ useAxios
     })
 ```
 
+> `HEAD`
+
+```ts
+import { UseAxios } from "better-xhr";
+
+const useAxios = new UseAxios();
+
+// single request
+useAxios
+    .head(
+        'scope-name',
+        'target-url',
+        {}  // optional config for axios
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useAxios
+    .head_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for axios
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `OPTIONS`
+
+```ts
+import { UseAxios } from "better-xhr";
+
+const useAxios = new UseAxios();
+
+// single request
+useAxios
+    .options(
+        'scope-name',
+        'target-url',
+        {}  // optional config for axios
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useAxios
+    .options_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for axios
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `PATCH`
+
+```ts
+import { UseAxios } from "better-xhr";
+
+const useAxios = new UseAxios();
+
+// single request
+useAxios
+    .patch(
+        'scope-name',
+        'target-url',
+        null,  // put data in any type
+        {}  // optional config for axios
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useAxios
+    .patch_retry(
+        'scope-name', 5,
+        'target-url',
+        null,  // put data in any type
+        {}  // optional config for axios
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
 > `Scope` & `Cancel`
 
 ```ts
@@ -460,6 +570,206 @@ useFetch
     })
 ```
 
+> `HEAD`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .head(
+        'scope-name',
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .put_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `CONNECT`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .connect(
+        'scope-name',
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .connect_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `OPTIONS`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .options(
+        'scope-name',
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .options_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `TRACE`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .trace(
+        'scope-name',
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .trace_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `PATCH`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// single request
+useFetch
+    .patch(
+        'scope-name',
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useFetch
+    .patch_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
 > `Scope` & `Cancel`
 
 ```ts
@@ -546,10 +856,426 @@ useFetch.remove_response_interceptor('interceptor2')
 
 ### xhr
 
----
+> `GET`
 
-### CHANGELOG
+```ts
+import { UseXhr } from "better-xhr";
 
-| version | description |
-| --- | --- |
-| `1.0.0` | Complete the encapsulation of `axios`. Support `GET`, `POST`, `DELETE`,`PUT` with `scope`, `retry`, `interceptor`. |
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .get(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .get_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `POST`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .post(
+        'scope-name',
+        'target-url',
+        {
+            body: null  // request body
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .post_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            body: null  // request body
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `DELETE`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .delete(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .delete_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `PUT`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .put(
+        'scope-name',
+        'target-url',
+        {
+            body: null  // request body
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .put_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            body: null  // request body
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `HEAD`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .head(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .head_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `CONNECT`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .connect(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .connect_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `OPTIONS`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .options(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .options_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `TRACE`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .trace(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .trace_retry(
+        'scope-name', 5,
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `PATCH`
+
+```ts
+import { UseXhr } from "better-xhr";
+
+const useXhr = new UseXhr();
+
+// single request
+useXhr
+    .patch(
+        'scope-name',
+        'target-url',
+        {
+            body: null  // request body
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// auto retry
+useXhr
+    .patch_retry(
+        'scope-name', 5,
+        'target-url',
+        {
+            body: null  // request body
+            // optional config for fetch
+        }
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+```
+
+> `Scope` & `Cancel`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// setup a request with scope
+useFetch
+    .get(
+        'scope-name',
+        'target-url',
+        {}  // optional config for fetch
+    )
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// get all scopes in the instance
+const scopes = useFetch.scopes
+console.log(scopes)  // [ 'scope-name' ]
+
+// cancel specific scope
+useFetch.cancel_scope('scope-name')
+
+// cancel scopes
+useFetch.cancel_scopes([ 'scope1', 'scope2', 'scope3' ])
+
+// cancel all request
+useFetch.cancel_all()
+```
+
+> `Interceptor`
+
+```ts
+import { UseFetch } from "better-xhr";
+
+const useFetch = new UseFetch();
+
+// request interceptor
+
+// - add 
+useFetch
+    .add_request_interceptor(
+        'interceptor1',
+        (config) => {
+            /** operate config here */
+        }
+    )
+
+// - list
+console.log(useFetch.request_interceptors)  // [ 'interceptor1' ]
+
+// - remove
+useFetch.remove_request_interceptor('interceptor1')
+
+// response interceptor
+
+// - add
+useFetch
+    .add_response_interceptor(
+        'interceptor2',
+        {
+            fulfill: (res) => {
+                /** operate response */
+            },
+            reject: (err) => {
+                /** operate error */
+            }
+        }
+    )
+
+// - list
+console.log(useFetch.response_interceptors)  // [ 'interceptor2' ]
+
+// - remove
+useFetch.remove_response_interceptor('interceptor2')
+```
