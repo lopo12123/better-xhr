@@ -1,5 +1,4 @@
-import axios from "axios";
-import { do_retry_task } from "./core";
+import { do_retry_task, RequestType } from "./core";
 
 export type RequestInterceptor = {
     fn: (config: Omit<RequestInit, 'signal' | 'method'>) => void
@@ -154,7 +153,7 @@ class UseFetch {
     /**
      * @description fetch 的所有类型请求的语法结构相同, 其请求体(如果有)在 `config` 中.
      */
-    private common_fetch(request_type: 'GET' | 'POST' | 'DELETE' | 'PUT', scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+    private common_fetch(request_type: RequestType, scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
         // 获取 token
         const token_for_scope = this.entry_or_insert(scope)
 
@@ -289,6 +288,136 @@ class UseFetch {
             retry,
             this.common_fetch,
             [ 'PUT', scope, url, config ],
+            this.isCancel
+        )
+    }
+
+    /**
+     * @description `HEAD`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    head(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return this.common_fetch('HEAD', scope, url, config)
+    }
+
+    /**
+     * @description `HEAD`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    head_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return do_retry_task(
+            retry,
+            this.common_fetch,
+            [ 'HEAD', scope, url, config ],
+            this.isCancel
+        )
+    }
+
+    /**
+     * @description `CONNECT`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    connect(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return this.common_fetch('CONNECT', scope, url, config)
+    }
+
+    /**
+     * @description `CONNECT`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    connect_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return do_retry_task(
+            retry,
+            this.common_fetch,
+            [ 'CONNECT', scope, url, config ],
+            this.isCancel
+        )
+    }
+
+    /**
+     * @description `OPTIONS`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    options(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return this.common_fetch('OPTIONS', scope, url, config)
+    }
+
+    /**
+     * @description `OPTIONS`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    options_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return do_retry_task(
+            retry,
+            this.common_fetch,
+            [ 'OPTIONS', scope, url, config ],
+            this.isCancel
+        )
+    }
+
+    /**
+     * @description `TRACE`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    trace(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return this.common_fetch('TRACE', scope, url, config)
+    }
+
+    /**
+     * @description `TRACE`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    trace_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return do_retry_task(
+            retry,
+            this.common_fetch,
+            [ 'TRACE', scope, url, config ],
+            this.isCancel
+        )
+    }
+
+    /**
+     * @description `PATCH`
+     * @param scope `scope` 名
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    patch(scope: string, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return this.common_fetch('PATCH', scope, url, config)
+    }
+
+    /**
+     * @description `PATCH`, 失败后自动重试 `retry` 次, 主动取消请求则会无视重试直接抛出
+     * @param scope `scope` 名
+     * @param retry 自动重试次数(`>=1`, 若传入小于`1`则默认为`1`)
+     * @param url 请求源
+     * @param config 请求参数 (同 `fetch`, 但不允许配置 `method` 和 `signal`字段)
+     */
+    patch_retry(scope: string, retry: number, url: RequestInfo, config?: Omit<RequestInit, 'signal' | 'method'>) {
+        return do_retry_task(
+            retry,
+            this.common_fetch,
+            [ 'PATCH', scope, url, config ],
             this.isCancel
         )
     }
