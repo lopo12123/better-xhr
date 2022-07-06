@@ -372,8 +372,8 @@ class UseXhr {
     get_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.get,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'GET', scope, url, config ],
             this.isCancel
         )
     }
@@ -398,8 +398,8 @@ class UseXhr {
     post_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.post,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'POST', scope, url, config ],
             this.isCancel
         )
     }
@@ -424,8 +424,8 @@ class UseXhr {
     delete_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.delete,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'DELETE', scope, url, config ],
             this.isCancel
         )
     }
@@ -450,8 +450,8 @@ class UseXhr {
     put_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.put,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'PUT', scope, url, config ],
             this.isCancel
         )
     }
@@ -476,8 +476,8 @@ class UseXhr {
     head_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.head,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'HEAD', scope, url, config ],
             this.isCancel
         )
     }
@@ -502,8 +502,8 @@ class UseXhr {
     connect_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.connect,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'CONNECT', scope, url, config ],
             this.isCancel
         )
     }
@@ -528,8 +528,8 @@ class UseXhr {
     options_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.options,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'OPTIONS', scope, url, config ],
             this.isCancel
         )
     }
@@ -554,8 +554,8 @@ class UseXhr {
     trace_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.trace,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'TRACE', scope, url, config ],
             this.isCancel
         )
     }
@@ -580,8 +580,8 @@ class UseXhr {
     patch_retry(scope: string, retry: number, url: string | URL, config: Omit<XHRRequestConfig, 'method' | 'url'>) {
         return do_retry_task(
             retry,
-            this.patch,
-            [ scope, url, config ],
+            this.common_xhr,
+            [ 'PATCH', scope, url, config ],
             this.isCancel
         )
     }
